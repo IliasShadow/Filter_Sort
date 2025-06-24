@@ -1,0 +1,64 @@
+﻿#warningMessage {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    display: none;
+}
+svg {
+    width: 80%;
+    height: 500px;
+}
+svg path, line {
+    fill: none;
+    stroke: black;
+    stroke-width: 1px;
+}
+svg text {
+    font: 10px Verdana;
+}
+#chartSettings {
+    display: flex;
+    -ms-flex-item-align: stretch;
+}
+#chartSettings  div{
+    margin: 10px;
+}
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(45deg, rgb(202, 98, 47), rgb(74, 174, 54))
+}
+h1 {
+    display:block;
+    margin:auto 0;
+}
+.graph {
+    display:flex;
+    -ms-flex-item-align: auto;
+    width: 100%;
+    justify-content: space-around;
+}
+.links {
+    display:flex;
+    justify-content: space-around;
+}
+a {
+    text-decoration: none;
+    color:black;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color:rgb(183, 193, 136)
+}
+th, td {
+    text-align: center;
+    padding: 8px;
+    border: solid thin black;
+}
+details {
+    margin-bottom: 20px;
+}

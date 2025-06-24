@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Таблица Олимпийских игр</title>
+    <link rel="stylesheet" href="styles/tableStyle.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script> 
+    <script src="scripts/data.js"></script>
+    <script src="scripts/table.js"></script>
+</head>
+<body>
+    <p class="links">
+        <a href="2_1.html">Олимпийские игры последних 10 лет</a><br>
+        <a href="2_2.html">Сочинская Олимпиада</a><br>
+        <a href="2_3.html">Хронология олимпийских игр</a>
+    </p>
+    <hr>
+    <h1>Олимпийские игры</h1>
+    <p>
+        Олимпийские игры &mdash; самые крупные и престижные международные спортивные соревнования. Летние игры проводятся раз в четыре года, начиная с 1986 года. Зимние впервые были проведены в 1924 году и имеют точно такую же периодичность.
+    </p>
+    <details>
+        <summary>График</summary>
+        <div class="graph">
+            <form id="chartSettings">
+                <div>
+                    <h3>Значение по оси OX</h3>
+                    <input type="radio" name="OX" value="year" checked> Год <br>
+                    <input type="radio" name="OX" value="city"> Город<br>
+                    <h3>Значение по оси OY</h3>
+                    <input type="radio" name="OY" value="countries" checked> Страны<br>
+                    <input type="radio" name="OY" value="sportsmen"> Спортсмены<br>
+                </div>
+                <div>
+                    <h3>Значение по оси OY</h3>
+                    <input type="radio" name="aggregation" value="max" checked> Максимальные значения<br>
+                    <input type="radio" name="aggregation" value="min"> Минимальные значения<br>
+                    <input type="radio" name="aggregation" value="avg"> Средние значения<br>
+                    <h3>Тип диаграммы</h3>
+                    <input type="radio" name="chartType" value="scatter" checked> Точечная<br>
+                    <input type="radio" name="chartType" value="line"> Линейная<br>
+                    <input type="radio" name="chartType" value="bar"> Столбчатая<br>
+                </div>
+                <div>
+                    <button type="button" id="buildChart">Построить</button>
+                    <button type="button" id="deleteChart">Удалить график</button>
+                </div>
+            </form>
+        </div>
+        <svg id="chart" width="800" height="500"></svg>
+    </details>
+    <div id="warningMessage" style="color: red; font-weight: bold;"></div>
+    <details>
+        <summary> Фильтр </summary>
+        <form id="filterForm">
+            <p>
+                <label>Номер: <input type="text" name="number"></label>
+            </p>
+            <p>
+                <label>Сезон: <input type="text" name="season"></label>
+            </p>
+            <p>
+                Год: <label>от <input type="number" name="min_yers" min="1912" max="2018"></label>  
+                <label>до <input type="number" name="max_yers" min="1912" max="2018"></label>
+            </p>
+            <p>
+                <label>Город:<input type="text" name="city"></label>
+            </p>
+            <p>
+                Дата:<label> от <input type="date" name="min_date" min="1896-06-04" max="2018-02-25"></label>  
+                <label> до <input type="date" name="max_date" min="1896-06-04" max="2018-02-25"></label>
+            </p>
+            <p>
+                Спортсмены: <label>от <input type="number" name="min_sportsmen" min="246" max="11000"></label>  
+                <label>до <input type="number" name="max_sportsmen" min="246" max="11000"></label>
+            </p>
+            <p>
+                <label>Страны: от <input type="number" name="min_countries" min="12" max="207"></label>  
+                <label>до <input type="number" name="max_countries" min="12" max="207"></label>
+            </p>
+            <p>
+                <label>Виды спорта: от <input type="number" name="min_sports" min="7" max="34"></label>  
+                <label>до <input type="number" name="max_sports" min="7" max="34"></label>
+            </p>
+            <p>
+                <button type="button" id="applyFilter">Применить фильтр</button>
+                <button type="button" id="cancelFilter">Отменить фильтрацию</button>
+            </p>
+        </form>
+    </details>
+    <details>
+        <summary> Сортировка </summary>
+        <form id="sortForm">
+            <p>
+                <label>                     
+                    Первый уровень: 
+                    <select id="firstLevel" name="firstLevel">
+                        <option value="">Нет</option>
+                    </select>
+                </label>
+                <label>
+                    по убыванию? <input type="checkbox" name="firstDesc">
+                </label>
+            </p>
+            <p>
+                <label>                     
+                    Второй уровень: 
+                    <select id="secondLevel" name="secondLevel" disabled>
+                        <option value="">Нет</option>
+                    </select>
+                </label>
+                <label>
+                    по убыванию? <input type="checkbox" name="secondDesc">
+                </label>
+            </p>
+            <p>
+                <label>                     
+                    Третий уровень: 
+                    <select id="thirdLevel" name="thirdLevel" disabled>
+                        <option value="">Нет</option>
+                    </select>
+                </label>
+                <label>
+                    по убыванию? <input type="checkbox" name="thirdDesc">
+                </label>
+            </p>
+            <p>
+                <button type="button" id="applySort">Применить сортировку</button>
+                <button type="button" id="cancelSort">Отменить сортировку</button>
+            </p>
+        </form>
+    </details>
+    <article>
+        <h1>Олимпийские игры</h1>
+        <p>
+            Олимпийские игры &mdash; самые крупные и престижные международные спортивные соревнования. Летние игры проводятся раз в четыре года, начиная с 1986 года. Зимние впервые были проведены в 1924 году и имеют точно такую же периодичность.
+        </p>
+        <h2>
+            Хронология Олимпийских игр<br>
+        </h2>
+        <table id="olympicTable">
+            <thead>
+                <tr>
+                    <td>№</td>
+                    <td>Cезон</td>
+                    <td>Год</td>
+                    <td>Город</td>
+                    <td>Дата начала</td>
+                    <td>Дата окончания</td>
+                    <td>Спортсмены</td>
+                    <td>Страны</td>
+                    <td>Виды спорта</td>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </article>
+    
+</body>
+</html>
